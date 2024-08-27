@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block title %}
+Index Page
+{% endblock %}
+{% block body %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<h1>Register</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ loginForm.as_p }}
+    <button>Register</button>
+</form>
+<br>
+<table border="1">
+    <thead>
+        <th>S.no</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.contact}}</td>
+            <td>{{i.email}}</td>
+            <td><a href="{% url 'update' i.id %}" style="padding: 2px 20px; background-color: green; color: white; text-decoration: none; border-radius: 5px;">Click Me</a></td>
+            <td><a href="{% url 'delete' i.id %}" style="padding: 2px 20px; background-color: red; color: white; text-decoration: none; border-radius: 5px;">Click Me</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
